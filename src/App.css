@@ -1,38 +1,50 @@
-.App {
-  text-align: center;
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+.nav-item{
+    padding-left: 1rem;
+}
+body {
+    font-family: "Lato", sans-serif;
+
+}
+.Products-Header{
+    padding-top: 3rem;
+    padding-left: 6rem;
+}
+.card{
+    width:21rem;
+    border-style: none;
+    margin-left:6rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+.card:hover{
+    border-style: solid;
+    border-width: 1rem;
+    border-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+#Hover-Icon{
+    transform:translate(-10%);
+    position: absolute;
+    right: 15px;
+    margin-top: 17.5rem;
+    border-style: none;
+    text-align: center;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding-top: 5px;
+}
+.modal{
+    margin-left: 37rem;
+    margin-top: 3rem;
+    border-radius: 0;
+
+}
+.modal-dialog{
+    padding-left: 15rem;
+    opacity: 5;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
