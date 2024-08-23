@@ -10,7 +10,7 @@ class Products extends Component {
     handelItemHover = (item)=>{
         this.setState({activeItem: item});
     };
-    handleItemLeave = (item)=>{
+    handleItemLeave = ()=>{
         this.setState({activeItem: null});
     }
     renderCart = (itemName)=> {
