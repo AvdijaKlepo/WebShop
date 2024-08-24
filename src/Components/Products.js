@@ -1,5 +1,6 @@
 import {Component} from "react";
 import image from "../image.webp"
+import Modal2 from"../Modal2.css"
 class Products extends Component {
     constructor(props) {
         super(props);
@@ -30,22 +31,26 @@ class Products extends Component {
     render() {
         const productName = "Product1";
         return(
-            <div className="ProductsComponents">
-                <h1 className="Products-Header">Women</h1>
-                <div className="card mt-5" onMouseEnter={()=>this.handelItemHover(productName)}
-                onMouseLeave={this.handleItemLeave}>
-                    <div className="Product-Image">
-                        <img src={image} className="card-img-top" alt="Logo"/>
-                        {this.renderCart(productName)}
-                    </div>
-                    <div className="card-body">
-                        <p className="card-text fw-light">Product name</p>
-                        <p>Product price</p>
+
+            <div className={Modal2.modalBackdrop}>
+                <div className="ProductsComponents">
+                    <h1 className="Products-Header">Women</h1>
+                    <div className="card mt-5" onMouseEnter={() => this.handelItemHover(productName)}
+                         onMouseLeave={this.handleItemLeave}>
+                        <div className="Product-Image">
+                            <img src={image} className="card-img-top" alt="Logo"/>
+                            {this.renderCart(productName)}
+                        </div>
+                        <div className="card-body">
+                            <p className="card-text fw-light">Product name</p>
+                            <p>Product price</p>
+                        </div>
+
                     </div>
 
                 </div>
-
             </div>
+
         )
     }
 }
