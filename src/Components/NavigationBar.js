@@ -1,5 +1,6 @@
 import {Component} from "react";
 import Modal from "../Modal.css"
+import aLogo from "../a-logo.png"
 
 class NavigationBar extends Component  {
     constructor(props) {
@@ -47,8 +48,8 @@ class NavigationBar extends Component  {
                                 {['Women', 'Men', 'Kids'].map(this.renderNavItem)}
                             </ul>
 
-                            <i className="bi bi-bag-check-fill col-5 me-lg-2 text-success h1"></i>
-                            <i className="bi bi-cart me-5 pe-5 h3" data-bs-toggle="modal"
+                            <img className="Shop-Logo" src={aLogo} alt="webShopLogo"/>
+                            <i id="modalCart" className="bi bi-cart me-5  pe-5 h3" data-bs-toggle="modal"
                                data-bs-target="#exampleModal"></i>
 
                         </div>

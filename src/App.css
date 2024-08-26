@@ -7,9 +7,20 @@
 
 }
 body {
-    font-family: "Lato", sans-serif;
+    font-family: "Raleway", sans-serif;
 
 }
+.Shop-Logo{
+    width: 41px;
+    height: 41px;
+    position: relative;
+    right: 699px;
+    bottom: 10px;
+}
+#modalCart{
+    padding-bottom: 10px;
+}
+
 .Products-Header{
     padding-top: 3rem;
     padding-left: 6rem;
@@ -18,7 +29,6 @@ body {
     width:21rem;
     border-style: none;
     margin-left:6rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-in-out;
 }
 .card:hover{
@@ -31,13 +41,13 @@ body {
     transform:translate(-10%);
     position: absolute;
     right: 15px;
-    margin-top: 17.5rem;
+    margin-top: 20.5rem;
     border-style: none;
     text-align: center;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    padding-top: 5px;
+    width: 52px;
+    height: 52px;
+    padding-top: 7px;
 }
 .modal{
     margin-left: 37rem;
@@ -51,7 +61,108 @@ body {
 .modal-backdrop{
     top: 99px;
 }
+.card{
+    width:386px;
+    height: 476px;
+}
 
+/* ProductDetails */
+.ProductDetails{
+    display: flex;
+    flex-direction: row;
+}
+.ImageVariant{
+    width: 79px;
+    height: 80px;
+    border:1px;
+    position: absolute;
+    left: 80px;
+    top: 160px
+}
+.ProductImageDetails{
+    width: 855px;
+    height: 478px;
+    margin-left: 235px;
+    margin-top: 35px;
+}
+.ProductInfo{
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    margin-top: 35px;
+}
+.ProductName{
+    font-size: 30px;
+}
+.ProductSize{
+    font-size: 18px;
+    font-family: Roboto Condensed, serif;
+    margin-top: 10px;
+}
+.SizeButtons{
+    display: flex;
+    flex-direction: row;
+}
+
+#SizeButton{
+    width: 63px;
+    height: 45px;
+    border:1px solid;
+    margin: 0 10px 0 0;
+    border-radius: 0;
+}
+.ProductColor{
+    font-family: Roboto Condensed, serif;
+    font-size: 18px;
+    margin-top: 30px;
+}
+.ColorButtons{
+    display: flex;
+    flex-direction: row;
+}
+#ColorButton{
+    width: 36px;
+    height: 36px;
+    border:1px solid;
+    margin: 0 5px 0 0;
+    border-radius: 0;
+}
+.ProductPriceText{
+    font-family: Roboto condensed, serif;
+    font-size: 18px;
+    line-height: 15px;
+    margin-top: 30px;
+}
+.ProductPrice{
+    font-family: Railway, sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 18px;
+    width: 86px;
+    margin-top: 10px;
+}
+#AddToCartButton{
+    background-color: #5ECE7B;
+    width: 292px;
+    height: 52px;
+    padding: 16px 32px 16px 32px;
+    border-radius: 0;
+    border: none;
+    margin-top: 20px;
+    font-family: Raleway, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+}
+.ProductDescription{
+    width: 292px;
+    height: 103px;
+    font-family: Roboto Condensed, serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 25px;
+    margin-top: 20px;
+}
 
 
 

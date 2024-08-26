@@ -2,6 +2,8 @@ import './App.css';
 import {Component} from "react";
 import NavigationBar from "./Components/NavigationBar";
 import Products from "./Components/Products";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProductDetails from "./Components/ProductDetails";
 
 class App extends Component  {
 
@@ -12,9 +14,17 @@ class App extends Component  {
 
     return (
         <div className="App">
+
             <NavigationBar/>
 
-            <Products/>
+                <main>
+
+                <Routes>
+                    <Route exact path="/"  element={<Products/>}/>
+                    <Route path="/ProductDetails" element={<ProductDetails/>}/>
+                </Routes>
+                </main>
+
 
         </div>
 
