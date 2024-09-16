@@ -1,11 +1,11 @@
 import {Component} from "react";
-import image from "../image.webp"
+
 class ProductDetails extends Component{
     render() {
         return(
             <div className="ProductDetails">
                 <div className="ProductImages">
-                    <img className="ImageVariant" src={`${image}`} alt="ProductImages"/>
+                    <img className="ImageVariant" src="" alt="ProductImages"/>
                     <img className="ProductImageDetails" src={`${image}`} alt="productImageDetails"/>
                 </div>
 

@@ -14,19 +14,20 @@ body {
     width: 41px;
     height: 41px;
     position: relative;
-    right: 699px;
+    right: 780px;
     bottom: 10px;
 }
 #modalCart{
     padding-bottom: 10px;
 }
 
-.Products-Header{
-    padding-top: 3rem;
-    padding-left: 6rem;
+.Product-Image{
+
 }
+
 .card{
-    width:21rem;
+    width:386px;
+    height: 444px;
     border-style: none;
     margin-left:6rem;
     transition: all 0.3s ease-in-out;
@@ -37,11 +38,16 @@ body {
     border-color: white;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+.card-img-top{
+    width:345px;
+    height: 330px;
+    padding: 10px 5px 5px 10px;
+}
 #Hover-Icon{
     transform:translate(-10%);
     position: absolute;
     right: 15px;
-    margin-top: 20.5rem;
+    margin-top: 19rem;
     border-style: none;
     text-align: center;
     border-radius: 50%;
@@ -61,10 +67,7 @@ body {
 .modal-backdrop{
     top: 99px;
 }
-.card{
-    width:386px;
-    height: 476px;
-}
+
 
 /* ProductDetails */
 .ProductDetails{

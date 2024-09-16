@@ -1,0 +1,49 @@
+# This file was generated. Do not edit manually.
+
+schema {
+    query: Query
+}
+
+type Attribute {
+    attribute_name: String
+    attribute_type: String
+    display_value: String
+    id: String
+    product_id: String
+    product_value: String
+}
+
+type Category {
+    category: String
+    id: String
+}
+
+type Gallery {
+    id: Int
+    image: String
+    product_id: String
+}
+
+type Price {
+    amount: Float
+    id: Int
+    label: String
+    symbol: String
+}
+
+type Product {
+    attributes: [Attribute]
+    brand: String
+    category_id: Int
+    id: String
+    images: [Gallery]
+    inStock: Boolean
+    prices: [Price]
+    product: String
+    product_description: String
+}
+
+type Query {
+    categories(id: Int): [Category]
+    products(category_id: Int, id: String): [Product]
+}

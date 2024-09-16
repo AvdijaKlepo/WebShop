@@ -1,35 +1,24 @@
 import './App.css';
-import {Component} from "react";
-import NavigationBar from "./Components/NavigationBar";
-import Products from "./Components/Products";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProductDetails from "./Components/ProductDetails";
-
-class App extends Component  {
+import { Component } from 'react';
+import NavigationBar from './Components/NavigationBar';
+import Products from './Components/Products';
+import {  Routes, Route } from 'react-router-dom';
 
 
-
+class App extends Component {
     render() {
-
-
-    return (
-        <div className="App">
-
-            <NavigationBar/>
-
+        return (
+            <div className="App">
                 <main>
-
-                <Routes>
-                    <Route exact path="/"  element={<Products/>}/>
-                    <Route path="/ProductDetails" element={<ProductDetails/>}/>
-                </Routes>
+                    <NavigationBar />
+                    <Routes>
+                        <Route exact path="/" element={<Products />} />
+                        <Route path="/products/:category_id" element={<Products />} />
+                    </Routes>
                 </main>
-
-
-        </div>
-
-    );
-  }
+            </div>
+        );
+    }
 }
 
 export default App;
