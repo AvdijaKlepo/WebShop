@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { GET_CATEGORIES } from "../GraphQL/Queries";
 import { Link } from "react-router-dom";
-
+import logo from '../assets/a-logo.png';
 class NavigationBar extends Component {
     constructor(props) {
         super(props);
@@ -13,9 +13,9 @@ class NavigationBar extends Component {
             error: null,
         };
     }
-
     handleItemClick = (item) => {
         this.setState({ activeItem: item });
+
     };
 
     componentDidMount() {
@@ -28,7 +28,11 @@ class NavigationBar extends Component {
                 query: GET_CATEGORIES,
             })
             .then((result) => {
-                this.setState({ categories: result.data.categories, loading: false });
+                const categories = result.data.categories;
+                this.setState({ categories: result.data.categories, loading: false,
+                    activeItem:categories.length > 0 ? categories[0].category : null
+                });
+
             })
             .catch((error) => {
                 this.setState({ error: error.message, loading: false });
@@ -48,6 +52,8 @@ class NavigationBar extends Component {
                         <ul className="navbar-nav me-4 ps-5 me-auto mb-2 mb-lg-0">
                             {categories.map((category) => {
                                 const isActive = activeItem === category.category;
+
+
                                 return (
                                     <li
                                         key={category.id}
@@ -67,7 +73,7 @@ class NavigationBar extends Component {
                             })}
                         </ul>
                     </div>
-                    <img className="Shop-Logo" src="/src/Assets/a-logo.png" alt="webShopLogo" />
+                    <img className="Shop-Logo" src={logo} alt="webShopLogo" />
                     <i id="modalCart" className="bi bi-cart me-5 pe-5 h3" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                 </div>
 

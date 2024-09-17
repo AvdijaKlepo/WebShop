@@ -74,19 +74,32 @@ body {
     display: flex;
     flex-direction: row;
 }
+.ProductImages{
+    display: flex;
+}
+.Images{
+    display: flex;
+    flex-direction: column;
+    margin-left: 80px;
+}
 .ImageVariant{
     width: 79px;
     height: 80px;
     border:1px;
-    position: absolute;
-    left: 80px;
-    top: 160px
+    margin-top: 20px;
+
 }
-.ProductImageDetails{
+.Carousel-Image{
+    width: 800px;
+    margin-top: 20px;
+    border:1px solid black;
+
+
+}
+#carouselExample{
     width: 855px;
     height: 478px;
-    margin-left: 235px;
-    margin-top: 35px;
+    margin-left: 80px;
 }
 .ProductInfo{
     display: flex;
@@ -166,6 +179,7 @@ body {
     line-height: 25px;
     margin-top: 20px;
 }
+
 
 
 

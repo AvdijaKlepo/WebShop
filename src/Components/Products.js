@@ -4,6 +4,7 @@ import {ApolloClient, InMemoryCache} from "@apollo/client";
 
 import {withRouter} from "../withRouter";
 import {GET_PRODUCTS} from "../GraphQL/Queries";
+import {Link} from "react-router-dom";
 
 
 
@@ -121,19 +122,21 @@ class Products extends Component {
                 {products.map((product, index) => (
                     <div className="col" key={index}>
 
-                        <div className="card" onMouseEnter={() => this.handelItemHover(product.product)}
-                             onMouseLeave={this.handleItemLeave}>
-                            <div className="Product-Image">
-                                <img
-                                    src={product.images.length > 0 ? product.images[0].image : ""}
-                                    className="card-img-top" alt="Product"/>
-                                {this.renderCart(product.product)}
+                        <Link to={`/productdetails/${product.id}`}>
+                            <div className="card" onMouseEnter={() => this.handelItemHover(product.product)}
+                                 onMouseLeave={this.handleItemLeave}>
+                                <div className="Product-Image">
+                                    <img
+                                        src={product.images.length > 0 ? product.images[0].image : ""}
+                                        className="card-img-top" alt="Product"/>
+                                    {this.renderCart(product.product)}
+                                </div>
+                                <div className="card-body">
+                                    <p>{product.product}</p>
+                                    <p>{product.prices[0].symbol}{product.prices[0].amount}</p>
+                                </div>
                             </div>
-                            <div className="card-body">
-                                <p>{product.product}</p>
-                                <p>{product.prices[0].symbol}{product.prices[0].amount}</p>
-                            </div>
-                        </div>
+                        </Link>
 
                     </div>
                 ))}

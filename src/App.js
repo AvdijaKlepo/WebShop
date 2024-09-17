@@ -3,6 +3,7 @@ import { Component } from 'react';
 import NavigationBar from './Components/NavigationBar';
 import Products from './Components/Products';
 import {  Routes, Route } from 'react-router-dom';
+import ProductDetails from "./Components/ProductDetails";
 
 
 class App extends Component {
@@ -12,8 +13,9 @@ class App extends Component {
                 <main>
                     <NavigationBar />
                     <Routes>
-                        <Route exact path="/" element={<Products />} />
-                        <Route path="/products/:category_id" element={<Products />} />
+
+                        <Route exact path="/products/:category_id" element={<Products />} />
+                        <Route path="/productdetails/:id" element={<ProductDetails />} />
                     </Routes>
                 </main>
             </div>
