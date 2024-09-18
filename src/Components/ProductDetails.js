@@ -47,7 +47,6 @@ class ProductDetails extends Component{
     }
     //calculates the carousel height based on the total amount of images all displayed to its left unless it returns only one image.
     //Then it looks stupid
-    // this is pure AI code, but I don't care as it's very cool
     calculateImageHeight() {
         const { product } = this.state;
         const baseHeight = 400;
@@ -119,21 +118,43 @@ class ProductDetails extends Component{
 
                 <div className="ProductInfo">
                     <h1 className="ProductName">{product.product}</h1>
-                    <h3 className="ProductSize">SIZE:</h3>
 
-                    <div className="SizeButtons">
-                        <button id="SizeButton" type="button" className="btn btn-light">XS</button>
-                        <button id="SizeButton" type="button" className="btn btn-light">S</button>
-                        <button id="SizeButton" type="button" className="btn btn-light">M</button>
-                        <button id="SizeButton" type="button" className="btn btn-light">L</button>
-                    </div>
+                    {product.attributes && product.attributes.length >0 ? (
 
-                    <h4 className="ProductColor">COLOR:</h4>
-                    <div className="ColorButtons">
-                        <button id="ColorButton" type="button" className="btn btn-light"></button>
-                        <button id="ColorButton" type="button" className="btn btn-light"></button>
-                        <button id="ColorButton" type="button" className="btn btn-light"></button>
-                    </div>
+
+                    product.attributes.reduce((acc,attribute)=>{
+                        const existingAttribute = acc.find(a=>a.attribute_name === attribute.attribute_name);
+                        if(existingAttribute){
+                            existingAttribute.values.push(attribute.display_value);
+                        }
+                        else{
+                            acc.push({
+                                attribute_name: attribute.attribute_name,
+                                values: [attribute.display_value]
+                            });
+                        }
+
+                        return acc;
+                    }, []).map((groupedAttribute, index) => (
+                        <div key={index}>
+                            <div className="Product-Attributes">
+
+                                <h3 className="ProductSize">{groupedAttribute.attribute_name}:</h3>
+                            </div>
+                            <div className="SizeButtons">
+                                {groupedAttribute.values.map((value, idx) => (
+                                    <button key={idx} id="SizeButton" type="button" className="btn btn-light">
+                                        {value}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                        ))
+                    ) : (
+                        <p>No attributes.</p>
+                        )}
+
+
 
                     <h5 className="ProductPriceText">PRICE:</h5>
                     <h2 className="ProductPrice">{product.prices[0].symbol} {product.prices[0].amount}</h2>
@@ -143,8 +164,6 @@ class ProductDetails extends Component{
                     </p>
 
                 </div>
-
-
 
 
             </div>

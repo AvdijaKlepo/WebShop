@@ -117,6 +117,7 @@ class Products extends Component {
         }
 
 
+
         return (
             <div className="row row-cols-3 row-cols-md-3 g-4">
                 {products.map((product, index) => (
@@ -128,8 +129,12 @@ class Products extends Component {
                                 <div className="Product-Image">
                                     <img
                                         src={product.images.length > 0 ? product.images[0].image : ""}
-                                        className="card-img-top" alt="Product"/>
-                                    {this.renderCart(product.product)}
+                                        className="card-img-top" alt="Product"
+                                    style={{filter: product.inStock ? "false" :"opacity(0.4)"}}/>
+
+                                    {product.inStock ? "" : <h1 className="inStockCheck"
+                                    style={{opacity:"0.4",position:"absolute",top:"250"}}>Out of Stock</h1>}
+                                    {product.inStock ?  this.renderCart(product.product) : ""}
                                 </div>
                                 <div className="card-body">
                                     <p>{product.product}</p>

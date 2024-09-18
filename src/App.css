@@ -21,9 +21,8 @@ body {
     padding-bottom: 10px;
 }
 
-.Product-Image{
 
-}
+
 
 .card{
     width:386px;
@@ -119,6 +118,7 @@ body {
     display: flex;
     flex-direction: row;
 }
+
 
 #SizeButton{
     width: 63px;

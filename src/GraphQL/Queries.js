@@ -12,6 +12,7 @@ export const GET_PRODUCTS = gql`
                 symbol
                 amount
             }
+            inStock
         }
     }
 `;
@@ -36,6 +37,9 @@ export const GET_PRODUCT_BY_ID = gql`
             }
             attributes {
                 display_value
+                attribute_name
+       
+                
             }
             brand
             prices {
