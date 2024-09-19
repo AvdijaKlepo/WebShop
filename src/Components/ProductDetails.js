@@ -157,7 +157,8 @@ class ProductDetails extends Component{
 
 
                     <h5 className="ProductPriceText">PRICE:</h5>
-                    <h2 className="ProductPrice">{product.prices[0].symbol} {product.prices[0].amount}</h2>
+                    <div className="Wrap-Price"><h2 className="ProductPrice">{product.prices[0].symbol}</h2>
+                        <h2>{product.prices[0].amount}</h2></div>
 
                     <button id="AddToCartButton" type="button" className="btn btn-success">ADD TO CART</button>
                     <p className="ProductDescription">{product.product_description}

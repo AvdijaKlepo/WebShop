@@ -3,6 +3,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { GET_CATEGORIES } from "../GraphQL/Queries";
 import { Link } from "react-router-dom";
 import logo from '../assets/a-logo.png';
+import {withRouter} from "../withRouter";
 class NavigationBar extends Component {
     constructor(props) {
         super(props);
@@ -32,11 +33,18 @@ class NavigationBar extends Component {
                 this.setState({ categories: result.data.categories, loading: false,
                     activeItem:categories.length > 0 ? categories[0].category : null
                 });
+                if (categories.length>0){
+                    const firstCategoryId = categories[0].id;
+                    this.navigateToCategory(firstCategoryId);
+                }
 
             })
             .catch((error) => {
                 this.setState({ error: error.message, loading: false });
             });
+    }
+    navigateToCategory = (categoryId) => {
+        this.props.navigate(`/products/${categoryId}`);
     }
 
     render() {
@@ -62,12 +70,21 @@ class NavigationBar extends Component {
                                         style={{ borderBottom: isActive ? '3px solid lightgreen' : 'none' }}
                                     >
                                         <Link
-                                            to={`/products/${category.id}`}
+                                            to={{
+
+                                                pathname:`/products/${category.id}`,
+                                                state: {activeCategory:activeItem},
+
+                                            }}
+                                            key={category.id}
+
                                             style={{ textDecoration: 'none', color: isActive ? 'lightgreen' : 'inherit' }}
 
                                             className="nav-link active mb-4">
                                             {category.category.toUpperCase()}
+
                                         </Link>
+
                                     </li>
                                 );
                             })}
@@ -99,4 +116,4 @@ class NavigationBar extends Component {
     }
 }
 
-export default NavigationBar;
+export default withRouter(NavigationBar);

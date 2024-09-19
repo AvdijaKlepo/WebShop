@@ -3,7 +3,7 @@ import {Component} from "react";
 import {ApolloClient, InMemoryCache} from "@apollo/client";
 
 import {withRouter} from "../withRouter";
-import {GET_PRODUCTS} from "../GraphQL/Queries";
+import {GET_CATEGORIES, GET_PRODUCTS} from "../GraphQL/Queries";
 import {Link} from "react-router-dom";
 
 
@@ -16,6 +16,7 @@ class Products extends Component {
             products: [],
             loading: true,
             error: null,
+            categories:[]
         };
     }
 
@@ -43,14 +44,19 @@ class Products extends Component {
 
 
     componentDidMount() {
-        console.log("Params in componentDidMount:", this.props.params);
         this.fetchProducts();
+        this.fetchCategories()
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.params.category_id !== this.props.params.category_id) {
-            console.log("Params in componentDidUpdate:", this.props.params);
             this.fetchProducts();
+        }
+        if (this.props.location !== prevProps.location) {
+            const activeCategory = this.props.location.state
+                ? this.props.location.state.activeCategory
+                : null;
+            console.log('ProductParams after update:', activeCategory);
         }
     }
 
@@ -60,20 +66,14 @@ class Products extends Component {
             cache: new InMemoryCache(),
         });
 
-        // Ensure category_id is correctly converted to an integer
+
         const categoryId = Number(this.props.params.category_id);
 
-        console.log("Original category_id:", this.props.params.category_id);
-        console.log('Converted categoryId:', categoryId);
-        console.log('Type of categoryId:', typeof categoryId);
 
-        // If the categoryId is NaN or invalid, skip the query
         if (isNaN(categoryId)) {
-            console.log("Invalid category_id, skipping query");
             return;
         }
 
-        console.log("Sending query with category_id:", categoryId);
 
         this.setState({ loading: true, error: null });
 
@@ -83,31 +83,49 @@ class Products extends Component {
             fetchPolicy: 'network-only'
         })
             .then((result) => {
-                console.log("Query result:", result);
                 this.setState({
                     products: result.data.products,
                     loading: false,
                     error: null,
                 }, () => {
-                    console.log("Updated products state:", this.state.products);
                 });
             })
             .catch((error) => {
-                console.error("GraphQL query error:", error);
                 this.setState({
                     error: error.message,
                     loading: false,
                 });
             });
     };
+    fetchCategories = ()=>{
+        const client = new ApolloClient({
+            uri: 'http://localhost/index.php/graphql',
+            cache: new InMemoryCache(),
+        });
+        client.query({
+            query: GET_CATEGORIES,
+            fetchPolicy: 'network-only'
+        })
+            .then((result)=>{
+                this.setState({
+                    categories: result.data.categories,
+                    loading:false,
+                    error:null,
+                },()=>{
 
+                });
+            })
+            .catch((error) => {
+                this.setState({error: error.message});
+            });
+    }
 
 
     render() {
-        const { products, loading, error } = this.state;
+        const { products, loading, error,categories } = this.state;
 
-        console.log("Render method called, products:", this.props.params);
 
+        const categoryId = this.props.params.category_id;
         if (loading) {
             return <p>Loading...</p>;
         }
@@ -115,14 +133,27 @@ class Products extends Component {
         if (error) {
             return <p>Error: {error}</p>;
         }
+        if(categoryId===categories.id){
+
+        }
+        console.log(categories)
+        console.log(categoryId)
+
+        const displayCategory = categories.find((category) => category.id === categoryId);
+        console.log("Correct Category",displayCategory)
+
 
 
 
         return (
-            <div className="row row-cols-3 row-cols-md-3 g-4">
+            <div>
+                {displayCategory ? (
+                    <h1 className="DisplayCategory">{displayCategory.category.toUpperCase()}</h1>
+                ): null}
+                <div className="row row-cols-3 row-cols-md-3 g-4">
+
                 {products.map((product, index) => (
                     <div className="col" key={index}>
-
                         <Link to={`/productdetails/${product.id}`}>
                             <div className="card" onMouseEnter={() => this.handelItemHover(product.product)}
                                  onMouseLeave={this.handleItemLeave}>
@@ -133,7 +164,7 @@ class Products extends Component {
                                     style={{filter: product.inStock ? "false" :"opacity(0.4)"}}/>
 
                                     {product.inStock ? "" : <h1 className="inStockCheck"
-                                    style={{opacity:"0.4",position:"absolute",top:"250"}}>Out of Stock</h1>}
+                                    style={{opacity:"0.4",position:"absolute",top:"250",}}>OUT OF STOCK</h1>}
                                     {product.inStock ?  this.renderCart(product.product) : ""}
                                 </div>
                                 <div className="card-body">
@@ -146,6 +177,7 @@ class Products extends Component {
                     </div>
                 ))}
             </div>
+    </div>
         );
     }
 }

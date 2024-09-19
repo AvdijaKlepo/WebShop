@@ -13,6 +13,7 @@ export const GET_PRODUCTS = gql`
                 amount
             }
             inStock
+            category_id
         }
     }
 `;
