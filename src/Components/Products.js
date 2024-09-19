@@ -156,7 +156,8 @@ class Products extends Component {
                     <div className="col" key={index}>
                         <Link to={`/productdetails/${product.id}`}>
                             <div className="card" onMouseEnter={() => this.handelItemHover(product.product)}
-                                 onMouseLeave={this.handleItemLeave}>
+                                 onMouseLeave={this.handleItemLeave}
+                            data-testid='product-${product.product}'>
                                 <div className="Product-Image">
                                     <img
                                         src={product.images.length > 0 ? product.images[0].image : ""}

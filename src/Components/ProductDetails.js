@@ -59,6 +59,18 @@ class ProductDetails extends Component{
             return 500;
         }
     }
+    calculateCarouselArrows(){
+        const {product}=this.state;
+        const basePadding = 150;
+        const extraPaddingPerImage = 20;
+        const numberOfImages = product.images ? product.images.length : 0;
+        if (numberOfImages>1){
+            return basePadding + numberOfImages * extraPaddingPerImage;
+        }
+        else{
+            return 150;
+        }
+    }
 
     render() {
         const {product,loading,error}=this.state;
@@ -73,6 +85,7 @@ class ProductDetails extends Component{
         }
 
         const dynamicHeight = this.calculateImageHeight();
+        const dynamicPadding = this.calculateCarouselArrows();
         return(
 
             <div className="ProductDetails">
@@ -90,7 +103,9 @@ class ProductDetails extends Component{
                             onClick={() => this.handleImageClicked(index)}
                         />
 
+
                     ))}
+
                     </div>
                     <div id="carouselExample" className="carousel slide">
                         <div className="carousel-inner">
@@ -104,12 +119,12 @@ class ProductDetails extends Component{
                             ))}
                         </div>
                         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-                                data-bs-slide="prev">
+                                data-bs-slide="prev" style={{paddingTop:`${dynamicPadding}px`}}>
                             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span className="visually-hidden">Previous</span>
                         </button>
                         <button className="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                                data-bs-slide="next">
+                                data-bs-slide="next" style={{paddingTop:`${dynamicPadding}px`}}>
                             <span className="carousel-control-next-icon" aria-hidden="true"></span>
                             <span className="visually-hidden">Next</span>
                         </button>

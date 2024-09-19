@@ -41,6 +41,7 @@ body {
     padding-bottom: 50px;
 }
 
+
 .card{
     width:386px;
     height: 444px;
@@ -104,14 +105,24 @@ body {
 .ImageVariant{
     width: 79px;
     height: 80px;
-    border:1px;
     margin-top: 20px;
 
 }
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+
+}
+.carousel-control-next{
+    padding-left: 100px;
+}
+.carousel-control-prev{
+    padding-right: 100px;
+}
 .Carousel-Image{
-    width: 800px;
-    margin-top: 20px;
-    border:1px solid black;
+    width: 855px;
+
+
 
 
 }
