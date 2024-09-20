@@ -5,6 +5,7 @@ import Products from './Components/Products';
 import {  Routes, Route } from 'react-router-dom';
 import ProductDetails from "./Components/ProductDetails";
 import Cart from "./Components/Cart";
+import {CartProvider} from "react-use-cart";
 
 
 class App extends Component {
@@ -12,13 +13,13 @@ class App extends Component {
         return (
             <div className="App">
                 <main>
-                    <NavigationBar />
-                    <Routes>
+                    <CartProvider><NavigationBar/>
+                        <Routes>
 
-                        <Route exact path="/products/:category_id" element={<Products />} />
-                        <Route path="/productdetails/:id" element={<ProductDetails />} />
-                    </Routes>
-                    <Cart/>
+                            <Route exact path="/products/:category_id" element={<Products/>}/>
+                            <Route path="/productdetails/:id" element={<ProductDetails/>}/>
+                        </Routes>
+                        <Cart/></CartProvider>
                 </main>
             </div>
         );
