@@ -30,13 +30,28 @@ class Cart extends Component {
                                                 <p>{item.name}</p>
                                                 <p>${item.price}</p>
                                                 <div className="SelectedAttributes">
-                                                    {item.attribute && Object.entries(item.attribute).map(([attributeName, value]) => (
-                                                        <p key={attributeName}>
-                                                            <strong>{attributeName}:</strong> {value}
-                                                        </p>
+                                                    {item.attributes.map((attribute, i) => (
+                                                        <div key={i}>
+                                                            <div>
+                                                                <h3 className="ProductSize">{attribute.attribute_name}:</h3>
+                                                            </div>
+
+                                                            {/* Iterate over attribute.values to create separate buttons for each value */}
+                                                            {attribute.values.map((value, idx) => (
+                                                                <button
+                                                                    key={idx}
+                                                                    type="button"
+                                                                    className="btn btn-outline-dark"
+                                                                    data-bs-toggle="button"
+                                                                >
+                                                                    {value} {/* Render the individual value */}
+                                                                </button>
+                                                            ))}
+                                                        </div>
                                                     ))}
                                                 </div>
 
+                                                {console.log(item.attributes)}
                                             </div>
 
                                             <div className="QuantityAndImage">
@@ -46,7 +61,7 @@ class Cart extends Component {
                                                         className="btn btn-outline-dark"
                                                         onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
                                                     >
-                                                        -
+                                                    -
                                                     </button>
                                                     <span className="Quantity">{item.quantity}</span>
                                                     <button
