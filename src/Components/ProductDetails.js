@@ -45,6 +45,8 @@ class ProductDetails extends Component{
 
 
     }
+
+
     handleImageClicked = (index)=>{
         this.setState({activeIndex:index})
     }

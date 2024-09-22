@@ -50,3 +50,4 @@ export const GET_PRODUCT_BY_ID = gql`
             product_description
         }
     }`
+

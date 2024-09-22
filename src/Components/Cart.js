@@ -1,7 +1,47 @@
 import {Component} from "react";
 import { withCart } from "../useCart";
+import {ApolloClient, InMemoryCache} from "@apollo/client";
+import {ADD_CART_ITEM, ADD_TO_CART} from "../GraphQL/Mutations";
 
 class Cart extends Component {
+    constructor(props) {
+        super(props);
+        this.client = new ApolloClient({
+            uri: 'http://localhost/index.php/graphql',
+            cache: new InMemoryCache(),
+        });
+    }
+
+    handleAddToCart = () => {
+        const { items } = this.props.cart;
+
+        items.forEach(item => {
+            const attributes = item.attributes.map(attr => attr.attribute_name); // Only sending attribute names
+
+            this.client.mutate({
+                mutation: ADD_CART_ITEM,
+                variables: {
+                    product_id: item.id,
+                    product: item.name,
+                    amount: item.price,
+                    quantity: item.quantity, // Make sure to send quantity from the cart
+                    attributes,
+                }
+            })
+                .then(response => {
+                    console.log(response);
+                    if (response.data.addCartItem) {
+                        alert("Items added to cart successfully!");
+                    }
+                })
+                .catch(err => {
+                    console.error("Error adding items to cart", err);
+                    alert("Failed to add items to cart: " + err.message);
+                });
+        });
+    };
+
+
     render() {
         const { items,
             totalItems,
@@ -10,6 +50,10 @@ class Cart extends Component {
             updateItemQuantity,
             removeItem,
             emptyCart, } = this.props.cart;
+
+
+
+
         return(
             <div className="Cart">
 
@@ -35,23 +79,32 @@ class Cart extends Component {
                                                             <div>
                                                                 <h3 className="ProductSize">{attribute.attribute_name}:</h3>
                                                             </div>
+                                                            <div style={{display:"none"}}>
+                                                                {item.attribute && Object.entries(item.attribute).map(([attributeName, value]) => (
+                                                                <p key={attributeName}>
+                                                                    <strong>{attributeName}:</strong> {value}
+                                                                </p>
+                                                            ))}
+                                                            </div>
 
-                                                            {/* Iterate over attribute.values to create separate buttons for each value */}
                                                             {attribute.values.map((value, idx) => (
                                                                 <button
                                                                     key={idx}
                                                                     type="button"
-                                                                    className="btn btn-outline-dark"
+                                                                    className={`btn btn-outline-dark ${
+                                                                        item.attribute && item.attribute[attribute.attribute_name] === value ? 'active' : ''
+                                                                    }`}
                                                                     data-bs-toggle="button"
                                                                 >
-                                                                    {value} {/* Render the individual value */}
+                                                                    {value}
                                                                 </button>
                                                             ))}
                                                         </div>
                                                     ))}
+
                                                 </div>
 
-                                                {console.log(item.attributes)}
+
                                             </div>
 
                                             <div className="QuantityAndImage">
@@ -89,9 +142,14 @@ class Cart extends Component {
 
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close
+                                <button
+                                    id="AddToCartButton"
+                                    type="button"
+                                    className="btn btn-success"
+                                    onClick={this.handleAddToCart}
+                                >
+                                    ADD TO CART
                                 </button>
-                                <button type="button" className="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
