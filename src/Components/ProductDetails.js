@@ -79,6 +79,7 @@ class ProductDetails extends Component{
 
     handleAttributeSelected = (attributeName, value) => {
         this.setState((prevState) => ({
+
             selectedAttributes: {
                 ...prevState.selectedAttributes,
                 [attributeName]: value, // dynamically update the selected attribute
@@ -91,7 +92,7 @@ class ProductDetails extends Component{
     handleAddToCart = () => {
         const { product, selectedAttributes } = this.state;
         const { addItem } = this.props.cart;
-        const simplifiedAttributes = product.attributes.reduce((acc, attribute) => {
+        const simplifiedAttributes = product.attributes ? product.attributes.reduce((acc, attribute) => {
             const existing = acc.find(a => a.attribute_name === attribute.attribute_name);
             if (existing) {
                 existing.values.push(attribute.display_value);
@@ -102,7 +103,7 @@ class ProductDetails extends Component{
                 });
             }
             return acc;
-        }, []);
+        }, []): [];
 
         if (selectedAttributes) {
             addItem({
@@ -115,7 +116,14 @@ class ProductDetails extends Component{
                 attribute: selectedAttributes
             });
         } else {
-            alert("Please select an attribute before adding to cart!");
+            addItem({
+                id: product.id,
+                name:product.product,
+                price: product.prices[0].amount,
+                symbol:product.prices[0].symbol,
+                image:product.images[0].image,
+                attributes: simplifiedAttributes
+            });
         }
     };
 
@@ -243,6 +251,7 @@ class ProductDetails extends Component{
                     id="AddToCartButton"
                     type="button"
                     className="btn btn-success"
+                    disabled={!product.inStock}
                     onClick={this.handleAddToCart}
                 >
                     ADD TO CART

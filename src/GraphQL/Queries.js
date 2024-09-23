@@ -14,7 +14,14 @@ export const GET_PRODUCTS = gql`
             }
             inStock
             category_id
+            attributes {
+                display_value
+                attribute_name
+
+
+            }
         }
+        
     }
 `;
 
@@ -48,6 +55,7 @@ export const GET_PRODUCT_BY_ID = gql`
                 symbol
             }
             product_description
+            inStock
         }
     }`
 

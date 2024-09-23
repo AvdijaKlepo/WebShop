@@ -1,7 +1,7 @@
 import {Component} from "react";
 import { withCart } from "../useCart";
 import {ApolloClient, InMemoryCache} from "@apollo/client";
-import {ADD_CART_ITEM, ADD_TO_CART} from "../GraphQL/Mutations";
+import {ADD_CART_ITEM} from "../GraphQL/Mutations";
 
 class Cart extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Cart extends Component {
     }
 
     handleAddToCart = () => {
-        const { items } = this.props.cart;
+        const { items,emptyCart } = this.props.cart;
 
         items.forEach(item => {
             const attributes = item.attributes.map(attr => attr.attribute_name); // Only sending attribute names
@@ -32,12 +32,16 @@ class Cart extends Component {
                     console.log(response);
                     if (response.data.addCartItem) {
                         alert("Items added to cart successfully!");
+
                     }
+                    emptyCart();
+
                 })
                 .catch(err => {
                     console.error("Error adding items to cart", err);
                     alert("Failed to add items to cart: " + err.message);
                 });
+
         });
     };
 
@@ -83,22 +87,30 @@ class Cart extends Component {
                                                                 {item.attribute && Object.entries(item.attribute).map(([attributeName, value]) => (
                                                                 <p key={attributeName}>
                                                                     <strong>{attributeName}:</strong> {value}
+                                                                    {console.log('Wow,',attributeName,value)}
                                                                 </p>
                                                             ))}
                                                             </div>
 
-                                                            {attribute.values.map((value, idx) => (
-                                                                <button
-                                                                    key={idx}
-                                                                    type="button"
-                                                                    className={`btn btn-outline-dark ${
-                                                                        item.attribute && item.attribute[attribute.attribute_name] === value ? 'active' : ''
-                                                                    }`}
-                                                                    data-bs-toggle="button"
-                                                                >
-                                                                    {value}
-                                                                </button>
-                                                            ))}
+                                                            {attribute.values.map((value, idx) => {
+                                                                // Check if the current attribute has an active selection
+                                                                const isActive = item.attribute && item.attribute[attribute.attribute_name] === value;
+
+                                                                // Determine if this is the first button and if there is no active button
+                                                                const firstButtonActive = idx === 0 && !Object.values(item.attribute || {}).some(v => v);
+
+                                                                return (
+                                                                    <button
+                                                                        key={idx}
+                                                                        type="button"
+                                                                        className={`btn btn-outline-dark ${isActive || firstButtonActive ? 'active' : ''}`}
+                                                                        data-bs-toggle="button"
+                                                                    >
+                                                                        {value}
+                                                                    </button>
+                                                                );
+                                                            })}
+
                                                         </div>
                                                     ))}
 
@@ -135,7 +147,7 @@ class Cart extends Component {
                                     ))}
                                     <p style={{display: "flex", justifyContent: "space-between", fontWeight: "bold"}}>
                                         <mark style={{backgroundColor: "white"}}>Total:</mark>
-                                        {cartTotal}
+                                        {Math.round(cartTotal*100)/100}
                                     </p>
                                 </div>
 
