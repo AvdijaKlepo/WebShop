@@ -149,7 +149,7 @@ class ProductDetails extends Component{
                         {product.images.map((image, index) => (
                             <img
                                 key={index}
-                                className="ImageVariant"
+                                className={`ImageVariant ${this.state.activeIndex === index ? 'active' : ''}`}
                                 src={image.image}
                                 alt={`Product Image ${index}`}
                                 onClick={() => this.handleImageClicked(index)}
@@ -159,7 +159,9 @@ class ProductDetails extends Component{
                     <div id="carouselExample" className="carousel slide">
                         <div className="carousel-inner">
                             {product.images.map((images, index) => (
-                                <div className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                                <div
+                                    key={index}
+                                    className={`carousel-item ${index === this.state.activeIndex ? "active" : ""}`}>
                                     <img
                                         src={images.image}
                                         className="Carousel-Image"

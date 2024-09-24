@@ -66,7 +66,7 @@ class Cart extends Component {
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <p><mark style={{backgroundColor:"white",fontWeight:"bold"}}>My bag</mark>, {totalItems} items</p>
+                                <p><mark style={{backgroundColor:"white",fontWeight:"bold"}}>My bag</mark>, {totalItems===1 ? "1 item":`${totalItems} items`}</p>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
@@ -87,16 +87,16 @@ class Cart extends Component {
                                                                 {item.attribute && Object.entries(item.attribute).map(([attributeName, value]) => (
                                                                 <p key={attributeName}>
                                                                     <strong>{attributeName}:</strong> {value}
-                                                                    {console.log('Wow,',attributeName,value)}
+
                                                                 </p>
                                                             ))}
                                                             </div>
 
                                                             {attribute.values.map((value, idx) => {
-                                                                // Check if the current attribute has an active selection
+
                                                                 const isActive = item.attribute && item.attribute[attribute.attribute_name] === value;
 
-                                                                // Determine if this is the first button and if there is no active button
+
                                                                 const firstButtonActive = idx === 0 && !Object.values(item.attribute || {}).some(v => v);
 
                                                                 return (
@@ -105,6 +105,8 @@ class Cart extends Component {
                                                                         type="button"
                                                                         className={`btn btn-outline-dark ${isActive || firstButtonActive ? 'active' : ''}`}
                                                                         data-bs-toggle="button"
+                                                                        style={{pointerEvents:"none"}}
+                                                                        data-testid='cart-item-attribute-${value}'
                                                                     >
                                                                         {value}
                                                                     </button>

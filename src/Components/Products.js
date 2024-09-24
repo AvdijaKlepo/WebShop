@@ -40,8 +40,8 @@ class Products extends Component {
                 id="Hover-Icon"
                 className={`bi bi-cart2 h3 bg-success text-white ${isActive ? 'active' : ''}`}
                 onMouseEnter={() => this.handelItemHover(product.product)}
-                style={{ visibility: isActive ? 'visible' : 'hidden' }}
-                onClick={() => this.handleAddToCart(product)} // Pass specific product here
+                style={{ visibility: isActive ? 'visible' : 'hidden',cursor: 'pointer' }}
+                onClick={() => this.handleAddToCart(product)}
             ></i>
         );
     };
@@ -177,7 +177,7 @@ class Products extends Component {
                 <div className="row row-cols-3 row-cols-md-3 g-4">
                     {products.map((product, index) => (
                         <div className="col" key={index}>
-                            <Link to={`/productdetails/${product.id}`}>
+
                                 <div
                                     className="card"
                                     onMouseEnter={() => this.handelItemHover(product.product)}
@@ -185,6 +185,7 @@ class Products extends Component {
                                     data-testid={`product-${product.product}`}
                                 >
                                     <div className="Product-Image">
+                                        <Link to={`/productdetails/${product.id}`} style={{textDecoration:"none"}}>
                                         <img
                                             src={product.images.length > 0 ? product.images[0].image : ""}
                                             className="card-img-top"
@@ -193,6 +194,7 @@ class Products extends Component {
                                                 filter: product.inStock ? "false" : "opacity(0.4)",
                                             }}
                                         />
+                                        </Link>
                                         {product.inStock ? "" : (
                                             <h1
                                                 className="inStockCheck"
@@ -208,7 +210,7 @@ class Products extends Component {
                                         <p>{product.prices[0].symbol}{product.prices[0].amount}</p>
                                     </div>
                                 </div>
-                            </Link>
+
                         </div>
                     ))}
                 </div>
