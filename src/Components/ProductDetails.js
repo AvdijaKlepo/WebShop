@@ -51,7 +51,6 @@ class ProductDetails extends Component{
         this.setState({activeIndex:index})
     }
     //calculates the carousel height based on the total amount of images all displayed to its left unless it returns only one image.
-    //Then it looks stupid
     calculateImageHeight() {
         const { product } = this.state;
         const baseHeight = 400;
@@ -82,7 +81,7 @@ class ProductDetails extends Component{
 
             selectedAttributes: {
                 ...prevState.selectedAttributes,
-                [attributeName]: value, // dynamically update the selected attribute
+                [attributeName]: value,
             }
         }));
     };
@@ -92,14 +91,16 @@ class ProductDetails extends Component{
     handleAddToCart = () => {
         const { product, selectedAttributes } = this.state;
         const { addItem } = this.props.cart;
+
+        const uniqueId = `${product.id}-${JSON.stringify(selectedAttributes)}`
         const simplifiedAttributes = product.attributes ? product.attributes.reduce((acc, attribute) => {
             const existing = acc.find(a => a.attribute_name === attribute.attribute_name);
             if (existing) {
-                existing.values.push(attribute.display_value);
+                existing.values.push(attribute.product_value);
             } else {
                 acc.push({
                     attribute_name: attribute.attribute_name,
-                    values: [attribute.display_value],
+                    values: [attribute.product_value],
                 });
             }
             return acc;
@@ -107,7 +108,7 @@ class ProductDetails extends Component{
 
         if (selectedAttributes) {
             addItem({
-                id: product.id,
+                id:uniqueId,
                 name:product.product,
                 price: product.prices[0].amount,
                 symbol:product.prices[0].symbol,
@@ -204,11 +205,11 @@ class ProductDetails extends Component{
                                     (a) => a.attribute_name === attribute.attribute_name
                                 );
                                 if (existingAttribute) {
-                                    existingAttribute.values.push(attribute.display_value);
+                                    existingAttribute.values.push(attribute.product_value);
                                 } else {
                                     acc.push({
                                         attribute_name: attribute.attribute_name,
-                                        values: [attribute.display_value],
+                                        values: [attribute.product_value],
                                     });
                                 }
                                 return acc;
@@ -219,22 +220,30 @@ class ProductDetails extends Component{
                                         <h3 className="ProductSize">{groupedAttribute.attribute_name}:</h3>
                                     </div>
                                     <div className="SizeButtons">
-                                        {groupedAttribute.values.map((value, idx) => (
-                                            <button
-                                                key={idx}
-                                                id="SizeButton"
-                                                type="button"
-                                                className={`btn btn-outline-dark ${
-                                                    this.state.selectedAttributes[groupedAttribute.attribute_name] === value
-                                                        ? "selected"
-                                                        : ""
-                                                }`}
-                                                onClick={() => this.handleAttributeSelected(groupedAttribute.attribute_name, value)}
-                                                data-bs-toggle="button"
-                                            >
-                                                {value}
-                                            </button>
-                                        ))}
+                                        {groupedAttribute.values.map((value, idx) => {
+
+                                            const colorAttributeColor = groupedAttribute.attribute_name==="Color";
+                                            const selectedAttribute = this.state.selectedAttributes[groupedAttribute.attribute_name]===value;
+
+                                            return (
+                                                <button
+                                                    key={idx}
+                                                    id="SizeButton"
+                                                    type="button"
+                                                    className={`btn ${
+                                                        colorAttributeColor ? 
+                                                            "btn-outline-success" : "btn-outline-dark"
+                                                    } ${selectedAttribute ? "selected" : ""}`}
+                                                    onClick={() => this.handleAttributeSelected(groupedAttribute.attribute_name, value)}
+                                                    style={colorAttributeColor ? {backgroundColor:value}:{}}
+                                                    data-bs-toggle="button"
+                                                >
+                                                    {!colorAttributeColor && value}
+
+                                                </button>
+                                            )
+
+                                        })}
                                     </div>
                                 </div>
                             ))
@@ -255,6 +264,8 @@ class ProductDetails extends Component{
                     className="btn btn-success"
                     disabled={!product.inStock}
                     onClick={this.handleAddToCart}
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
                 >
                     ADD TO CART
                 </button>

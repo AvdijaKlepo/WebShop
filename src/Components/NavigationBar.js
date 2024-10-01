@@ -101,10 +101,12 @@ class NavigationBar extends Component {
                             <img className="Shop-Logo" src={logo} alt="webShopLogo"/>
                         </div>
                             <button data-testId="cart-btn" style={{backgroundColor: "white", border: "none"}}>
-                                <i id="modalCart" className="bi bi-cart me-5 pe-5 h3" data-bs-toggle="modal"
+                                <i  id="modalCart" className="bi bi-cart me-5 pe-5 h3" data-bs-toggle="modal"
                                    data-bs-target="#exampleModal">
+
                                     <h6 className="Bubble" style={{position:"relative",bottom:"40px",left:"65px",backgroundColor:"black",color:"white",
-                                    width:"20px",borderRadius:"50%"}}>{totalItems}</h6>
+                                    width:"20px",borderRadius:"50%"}}>{totalItems===0 ? "":totalItems}</h6>
+
                                 </i>
                             </button>
 

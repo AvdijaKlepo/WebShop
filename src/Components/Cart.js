@@ -24,7 +24,7 @@ class Cart extends Component {
                     product_id: item.id,
                     product: item.name,
                     amount: item.price,
-                    quantity: item.quantity, // Make sure to send quantity from the cart
+                    quantity: item.quantity,
                     attributes,
                 }
             })
@@ -72,8 +72,10 @@ class Cart extends Component {
                             </div>
                             <div className="modal-body">
                                 <div className="Cart">
+                                    {console.log(totalUniqueItems)}
                                     {items.map((item, index) => (
-                                        <div className="ProductItem" key={index}>
+
+                                        <div className="ProductItem" key={item.id}>
                                             <div className="ProductItems">
                                                 <p>{item.name}</p>
                                                 <p>${item.price}</p>
@@ -86,7 +88,8 @@ class Cart extends Component {
                                                             <div style={{display:"none"}}>
                                                                 {item.attribute && Object.entries(item.attribute).map(([attributeName, value]) => (
                                                                 <p key={attributeName}>
-                                                                    <strong>{attributeName}:</strong> {value}
+                                                                    <strong>{attributeName}:</strong>
+                                                                    <div>{value}</div>
 
                                                                 </p>
                                                             ))}
@@ -105,10 +108,9 @@ class Cart extends Component {
                                                                         type="button"
                                                                         className={`btn btn-outline-dark ${isActive || firstButtonActive ? 'active' : ''}`}
                                                                         data-bs-toggle="button"
-                                                                        style={{pointerEvents:"none"}}
+                                                                        style={{pointerEvents:"none",backgroundColor:`${value}`}}
                                                                         data-testid='cart-item-attribute-${value}'
-                                                                    >
-                                                                        {value}
+                                                                    > {attribute.attribute_name==="Color" ? "":value}
                                                                     </button>
                                                                 );
                                                             })}
@@ -161,6 +163,7 @@ class Cart extends Component {
                                     type="button"
                                     className="btn btn-success"
                                     onClick={this.handleAddToCart}
+
                                 >
                                     ADD TO CART
                                 </button>

@@ -46,7 +46,7 @@ export const GET_PRODUCT_BY_ID = gql`
             attributes {
                 display_value
                 attribute_name
-       
+                product_value
                 
             }
             brand
