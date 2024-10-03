@@ -16,7 +16,7 @@ class Cart extends Component {
         const { items,emptyCart } = this.props.cart;
 
         items.forEach(item => {
-            const attributes = item.attributes.map(attr => attr.attribute_name); // Only sending attribute names
+            const attributes = item.attributes.map(attr => attr.attribute_name);
 
             this.client.mutate({
                 mutation: ADD_CART_ITEM,
@@ -98,19 +98,20 @@ class Cart extends Component {
                                                             {attribute.values.map((value, idx) => {
 
                                                                 const isActive = item.attribute && item.attribute[attribute.attribute_name] === value;
-
-
-                                                                const firstButtonActive = idx === 0 && !Object.values(item.attribute || {}).some(v => v);
-
+                                                                const firstButtonActive = idx === 0 && !Object.values(item.attribute || {}).some(v => v); // adds the first attributes from the quick shop
                                                                 return (
                                                                     <button
                                                                         key={idx}
                                                                         type="button"
-                                                                        className={`btn btn-outline-dark ${isActive || firstButtonActive ? 'active' : ''}`}
+                                                                        id="cartButton"
+                                                                        className={`btn btn-outline-dark ${isActive || firstButtonActive? 'active':''}`}
                                                                         data-bs-toggle="button"
-                                                                        style={{pointerEvents:"none",backgroundColor:`${value}`}}
+                                                                        style={{pointerEvents:"none",backgroundColor:`${value}`,borderColor:`
+                                                                        ${isActive && attribute.attribute_name==="Color" || firstButtonActive? 'green':''}`,
+                                                                        boxShadow:`${isActive && attribute.attribute_name==="Color" ? "0 0 0 3px inset":""}`,boxSizing:"border-box"}}
                                                                         data-testid='cart-item-attribute-${value}'
                                                                     > {attribute.attribute_name==="Color" ? "":value}
+
                                                                     </button>
                                                                 );
                                                             })}

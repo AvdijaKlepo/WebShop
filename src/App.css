@@ -268,5 +268,9 @@ body {
     object-fit: cover;
 }
 
-
+#cartButton{
+    height: 35px;
+    margin: 1px;
+    width: 55px;
+}
 

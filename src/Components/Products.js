@@ -42,6 +42,8 @@ class Products extends Component {
                 onMouseEnter={() => this.handelItemHover(product.product)}
                 style={{ visibility: isActive ? 'visible' : 'hidden',cursor: 'pointer' }}
                 onClick={() => this.handleAddToCart(product)}
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
             ></i>
         );
     };
