@@ -14,6 +14,7 @@ class App extends Component {
             <div className="App">
                 <main>
                     <CartProvider><NavigationBar/>
+
                         <Routes>
 
                             <Route exact path="/products/:category_id" element={<Products/>}/>

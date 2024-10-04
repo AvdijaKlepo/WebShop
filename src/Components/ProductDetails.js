@@ -27,7 +27,7 @@ class ProductDetails extends Component{
         });
 
         const id = String(this.props.params.id);
-        console.log(id)
+
 
         this.setState({loading: true, error: null});
 
@@ -93,7 +93,7 @@ class ProductDetails extends Component{
         const { addItem } = this.props.cart;
 
         const uniqueId = `${product.id}-${JSON.stringify(selectedAttributes)}`
-        console.log(typeof (uniqueId))
+
         const simplifiedAttributes = product.attributes ? product.attributes.reduce((acc, attribute) => {
             const existing = acc.find(a => a.attribute_name === attribute.attribute_name);
             if (existing) {
@@ -116,7 +116,7 @@ class ProductDetails extends Component{
                 image:product.images[0].image,
                 attributes:simplifiedAttributes,
                 attribute: selectedAttributes
-            });
+            }); console.log('Id za klasicni shop',uniqueId)
         } else {
             addItem({
                 id: product.id,
@@ -126,6 +126,7 @@ class ProductDetails extends Component{
                 image:product.images[0].image,
                 attributes: simplifiedAttributes
             });
+
         }
     };
 

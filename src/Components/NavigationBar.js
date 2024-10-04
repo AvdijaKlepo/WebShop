@@ -58,7 +58,7 @@ class NavigationBar extends Component {
         if (error) return <p>Error: {error}</p>;
 
         return (
-            <nav className="navbar navbar-expand-lg p-4 fs-4">
+            <nav className="navbar fixed-top navbar-expand-lg p-4 fs-4">
                 <div className="container-fluid">
                     <div className="collapse navbar-collapse d-flex justify-content-between align-items-center" id="navbarSupportedContent">
                             <ul className="navbar-nav me-4 ps-5  mb-2 mb-lg-0">

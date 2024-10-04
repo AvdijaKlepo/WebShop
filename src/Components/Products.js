@@ -62,7 +62,6 @@ class Products extends Component {
             const activeCategory = this.props.location.state
                 ? this.props.location.state.activeCategory
                 : null;
-            console.log('ProductParams after update:', activeCategory);
         }
     }
 
@@ -127,7 +126,7 @@ class Products extends Component {
     }
     handleAddToCart = (product) => {
         const { selectedAttributes } = this.state;
-        const { addItem } = this.props.cart;
+        const { addItem,items,quantity } = this.props.cart;
 
         let finalSelectedAttributes = { ...selectedAttributes };
 
@@ -139,6 +138,11 @@ class Products extends Component {
                 }
             });
         }
+        console.log('Atributi izabrani quick shop:',JSON.stringify(finalSelectedAttributes));
+
+        const uniqueId = `${product.id}-${JSON.stringify(finalSelectedAttributes)}`
+
+
 
         const simplifiedAttributes = product.attributes
             ? product.attributes.reduce((acc, attribute) => {
@@ -155,16 +159,17 @@ class Products extends Component {
             }, [])
             : [];
 
-        // Add the selected product to the cart
+
         addItem({
-            id: product.id,
+            id: uniqueId,
             name: product.product,
-            price: product.prices[0].amount, // Prices should be correctly accessed from the product
+            price: product.prices[0].amount,
             symbol: product.prices[0].symbol,
             image: product.images[0].image,
             attributes: simplifiedAttributes,
             attribute: finalSelectedAttributes,
         });
+        console.log('Id za quick shop:',uniqueId)
     };
 
     render() {
@@ -180,10 +185,9 @@ class Products extends Component {
         }
 
         const displayCategory = categories.find((category) => category.id === categoryId);
-        console.log("Correct Category", displayCategory);
 
         return (
-            <div>
+            <div className="ProductsListing">
                 {displayCategory ? (
                     <h1 className="DisplayCategory">{displayCategory.category.toUpperCase()}</h1>
                 ) : null}

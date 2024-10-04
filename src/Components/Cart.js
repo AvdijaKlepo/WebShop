@@ -21,7 +21,7 @@ class Cart extends Component {
             item.attributes.forEach(attr => {
                 attributes[attr.attribute_name] = item.attribute[attr.attribute_name];
             });
-            console.log('Ids',item.id.split('-{',[0]))
+            console.log('Id poslan na back',item.id)
             this.client.mutate({
                 mutation: ADD_CART_ITEM,
                 variables: {
@@ -34,7 +34,6 @@ class Cart extends Component {
 
             })
                 .then(response => {
-                    console.log(response);
 
                     if (response.data.addCartItem) {
                         alert("Items added to cart successfully!");
@@ -78,7 +77,6 @@ class Cart extends Component {
                             </div>
                             <div className="modal-body">
                                 <div className="Cart">
-                                    {console.log(totalUniqueItems)}
                                     {items.map((item, index) => (
 
                                         <div className="ProductItem" key={item.id}>
@@ -96,7 +94,6 @@ class Cart extends Component {
                                                                 <p key={attributeName}>
                                                                     <strong>{attributeName}:</strong>
                                                                     <div>{value}</div>
-
                                                                 </p>
                                                             ))}
                                                             </div>
@@ -120,6 +117,7 @@ class Cart extends Component {
 
                                                                     </button>
                                                                 );
+
                                                             })}
 
                                                         </div>
@@ -170,7 +168,7 @@ class Cart extends Component {
                                     type="button"
                                     className="btn btn-success"
                                     onClick={this.handleAddToCart}
-
+                                    disabled={totalItems===0}
                                 >
                                     ADD TO CART
                                 </button>

@@ -24,13 +24,15 @@ body {
     align-items: center;
 
 }
-
+.navbar{
+    background-color: #ffffff; /* sticky nav*/
+}
 
 .DisplayCategory{
     font-weight: 400;
     font-size: 40px;
     margin-left: 90px;
-    padding-top: 50px;
+    padding-top: 200px;
     padding-bottom: 50px;
 }
 
@@ -92,7 +94,9 @@ body {
 .ProductDetails{
     display: flex;
     flex-direction: row;
+    padding-top: 200px;
 }
+
 .ProductImages{
     display: flex;
 }
@@ -127,8 +131,9 @@ body {
 }
 #carouselExample{
     width: 855px;
-    height: 478px;
+    max-height: 478px;
     margin-left: 80px;
+    scroll-behavior: auto !important;
 }
 .ProductInfo{
     display: flex;
