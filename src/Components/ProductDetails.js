@@ -93,6 +93,7 @@ class ProductDetails extends Component{
         const { addItem } = this.props.cart;
 
         const uniqueId = `${product.id}-${JSON.stringify(selectedAttributes)}`
+        console.log(typeof (uniqueId))
         const simplifiedAttributes = product.attributes ? product.attributes.reduce((acc, attribute) => {
             const existing = acc.find(a => a.attribute_name === attribute.attribute_name);
             if (existing) {

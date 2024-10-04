@@ -1,6 +1,6 @@
 import {Component} from "react";
 import { withCart } from "../useCart";
-import {ApolloClient, InMemoryCache} from "@apollo/client";
+import {ApolloClient, InMemoryCache, split} from "@apollo/client";
 import {ADD_CART_ITEM} from "../GraphQL/Mutations";
 
 class Cart extends Component {
@@ -15,21 +15,27 @@ class Cart extends Component {
     handleAddToCart = () => {
         const { items,emptyCart } = this.props.cart;
 
-        items.forEach(item => {
-            const attributes = item.attributes.map(attr => attr.attribute_name);
 
+        items.forEach(item => {
+            const attributes = {};
+            item.attributes.forEach(attr => {
+                attributes[attr.attribute_name] = item.attribute[attr.attribute_name];
+            });
+            console.log('Ids',item.id.split('-{',[0]))
             this.client.mutate({
                 mutation: ADD_CART_ITEM,
                 variables: {
-                    product_id: item.id,
+                    product_id: item.id.indexOf('-{') !==-1 ? item.id.slice(0,item.id.indexOf('-{')): item.id, //need a uniqueid to differentiate attributes, so slice if from details and leave alone from quick shop
                     product: item.name,
                     amount: item.price,
                     quantity: item.quantity,
                     attributes,
                 }
+
             })
                 .then(response => {
                     console.log(response);
+
                     if (response.data.addCartItem) {
                         alert("Items added to cart successfully!");
 
@@ -108,7 +114,7 @@ class Cart extends Component {
                                                                         data-bs-toggle="button"
                                                                         style={{pointerEvents:"none",backgroundColor:`${value}`,borderColor:`
                                                                         ${isActive && attribute.attribute_name==="Color" || firstButtonActive? 'green':''}`,
-                                                                        boxShadow:`${isActive && attribute.attribute_name==="Color" ? "0 0 0 3px inset":""}`,boxSizing:"border-box"}}
+                                                                        boxShadow:`${isActive && attribute.attribute_name==="Color" || firstButtonActive ? "0 0 0 3px inset":""}`,boxSizing:"border-box"}}
                                                                         data-testid='cart-item-attribute-${value}'
                                                                     > {attribute.attribute_name==="Color" ? "":value}
 

@@ -129,6 +129,17 @@ class Products extends Component {
         const { selectedAttributes } = this.state;
         const { addItem } = this.props.cart;
 
+        let finalSelectedAttributes = { ...selectedAttributes };
+
+
+        if (product.attributes && Object.keys(finalSelectedAttributes).length === 0) {
+            product.attributes.forEach(attribute => {
+                if (!finalSelectedAttributes[attribute.attribute_name]) {
+                    finalSelectedAttributes[attribute.attribute_name] = attribute.product_value;
+                }
+            });
+        }
+
         const simplifiedAttributes = product.attributes
             ? product.attributes.reduce((acc, attribute) => {
                 const existing = acc.find(a => a.attribute_name === attribute.attribute_name);
@@ -137,7 +148,7 @@ class Products extends Component {
                 } else {
                     acc.push({
                         attribute_name: attribute.attribute_name,
-                        values: [attribute.display_value],
+                        values: [attribute.product_value],
                     });
                 }
                 return acc;
@@ -152,7 +163,7 @@ class Products extends Component {
             symbol: product.prices[0].symbol,
             image: product.images[0].image,
             attributes: simplifiedAttributes,
-            attribute: selectedAttributes,
+            attribute: finalSelectedAttributes,
         });
     };
 

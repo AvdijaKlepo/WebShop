@@ -17,7 +17,7 @@ export const GET_PRODUCTS = gql`
             attributes {
                 display_value
                 attribute_name
-
+                product_value
 
             }
         }
