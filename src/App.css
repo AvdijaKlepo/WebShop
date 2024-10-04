@@ -104,36 +104,48 @@ body {
     display: flex;
     flex-direction: column;
     margin-left: 80px;
+    max-height: 578px;
+    overflow-y: auto;
+    width: 150px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+
 }
 .ImageVariant{
-    width: 79px;
-    height: 80px;
-    margin-top: 20px;
+    width: 130px;
+    height: 130px;
 
 }
-.carousel-control-next,
-.carousel-control-prev /*, .carousel-indicators */ {
-    filter: invert(100%);
-
+.ImageVariant:not(:first-child){
+    margin-top: 15px;
 }
+
 .carousel-control-next{
-    padding-left: 100px;
+
+    background-color:#000000BA;
+    width:32px;
+    height:32px;
+    margin-top: 270px;
+    margin-right: 20px;
 }
 .carousel-control-prev{
-    padding-right: 100px;
+
+    background-color:#000000BA;
+    width:32px;
+    height:32px;
+    margin-top: 270px;
+    margin-left: 15px;
 }
 .Carousel-Image{
-    width: 855px;
-
-
-
+    width: 850px;
+    height: 578px;
 
 }
 #carouselExample{
     width: 855px;
     max-height: 478px;
-    margin-left: 80px;
-    scroll-behavior: auto !important;
+    margin-left: 30px;
 }
 .ProductInfo{
     display: flex;

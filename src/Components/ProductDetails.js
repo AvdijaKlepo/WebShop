@@ -3,6 +3,7 @@ import {withRouter} from "../withRouter";
 import {ApolloClient, InMemoryCache} from "@apollo/client";
 import { GET_PRODUCT_BY_ID} from "../GraphQL/Queries";
 import {withCart} from "../useCart";
+import parse from 'html-react-parser'
 
 class ProductDetails extends Component{
     constructor(props) {
@@ -50,31 +51,7 @@ class ProductDetails extends Component{
     handleImageClicked = (index)=>{
         this.setState({activeIndex:index})
     }
-    //calculates the carousel height based on the total amount of images all displayed to its left unless it returns only one image.
-    calculateImageHeight() {
-        const { product } = this.state;
-        const baseHeight = 400;
-        const extraHeightPerImage = 50;
-        const numberOfImages = product.images ? product.images.length : 0;
-        if(numberOfImages>1) {
-            return baseHeight + numberOfImages * extraHeightPerImage;
-        }
-        else{
-            return 500;
-        }
-    }
-    calculateCarouselArrows(){
-        const {product}=this.state;
-        const basePadding = 150;
-        const extraPaddingPerImage = 20;
-        const numberOfImages = product.images ? product.images.length : 0;
-        if (numberOfImages>1){
-            return basePadding + numberOfImages * extraPaddingPerImage;
-        }
-        else{
-            return 150;
-        }
-    }
+
 
     handleAttributeSelected = (attributeName, value) => {
         this.setState((prevState) => ({
@@ -87,7 +64,6 @@ class ProductDetails extends Component{
     };
 
 
-    // Handle adding to cart
     handleAddToCart = () => {
         const { product, selectedAttributes } = this.state;
         const { addItem } = this.props.cart;
@@ -116,7 +92,7 @@ class ProductDetails extends Component{
                 image:product.images[0].image,
                 attributes:simplifiedAttributes,
                 attribute: selectedAttributes
-            }); console.log('Id za klasicni shop',uniqueId)
+            });
         } else {
             addItem({
                 id: product.id,
@@ -141,9 +117,26 @@ class ProductDetails extends Component{
         if (!product){
             return <p>No Product found!</p>
         }
+        const attributes = product.attributes
+            ? product.attributes.reduce((acc, attribute) => {
+                const existingAttribute = acc.find(
+                    (a) => a.attribute_name === attribute.attribute_name
+                );
+                if (existingAttribute) {
+                    existingAttribute.values.push(attribute.product_value);
+                } else {
+                    acc.push({
+                        attribute_name: attribute.attribute_name,
+                        values: [attribute.product_value],
+                    });
+                }
+                return acc;
+            }, [])
+            : [];
 
-        const dynamicHeight = this.calculateImageHeight();
-        const dynamicPadding = this.calculateCarouselArrows();
+        const uniqueAttributeNames = attributes.length;
+
+
         return (
 
             <div className="ProductDetails">
@@ -169,7 +162,7 @@ class ProductDetails extends Component{
                                         src={images.image}
                                         className="Carousel-Image"
                                         alt="..."
-                                        style={{height: `${dynamicHeight}px`}}
+
                                     />
                                 </div>
                             ))}
@@ -179,17 +172,18 @@ class ProductDetails extends Component{
                             type="button"
                             data-bs-target="#carouselExample"
                             data-bs-slide="prev"
-                            style={{paddingTop: `${dynamicPadding}px`}}
+                            style={{display: `${product.images.length > 1 ? 'block' : 'none'}`}}
+
                         >
                             <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="visually-hidden">Previous</span>
+                            <span className="visually-hidden"></span>
                         </button>
                         <button
                             className="carousel-control-next"
                             type="button"
                             data-bs-target="#carouselExample"
                             data-bs-slide="next"
-                            style={{paddingTop: `${dynamicPadding}px`}}
+                            style={{display: `${product.images.length > 1 ? 'block' : 'none'}`,}}
                         >
                             <span className="carousel-control-next-icon" aria-hidden="true"></span>
                             <span className="visually-hidden">Next</span>
@@ -264,7 +258,7 @@ class ProductDetails extends Component{
                     id="AddToCartButton"
                     type="button"
                     className="btn btn-success"
-                    disabled={!product.inStock}
+                    disabled={!product.inStock || Object.keys(this.state.selectedAttributes).length !==uniqueAttributeNames}
                     onClick={this.handleAddToCart}
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
@@ -272,7 +266,8 @@ class ProductDetails extends Component{
                     ADD TO CART
                 </button>
 
-                <p className="ProductDescription">{product.product_description}</p>
+                <div className="ProductDescription">
+                    {parse(product.product_description)}</div>
             </div>
     </div>
 

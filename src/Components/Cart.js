@@ -21,7 +21,6 @@ class Cart extends Component {
             item.attributes.forEach(attr => {
                 attributes[attr.attribute_name] = item.attribute[attr.attribute_name];
             });
-            console.log('Id poslan na back',item.id)
             this.client.mutate({
                 mutation: ADD_CART_ITEM,
                 variables: {
