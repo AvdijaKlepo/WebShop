@@ -4,6 +4,8 @@ import {ApolloClient, InMemoryCache} from "@apollo/client";
 import { GET_PRODUCT_BY_ID} from "../GraphQL/Queries";
 import {withCart} from "../useCart";
 import parse from 'html-react-parser'
+import {kebabCase} from "lodash";
+import {client} from '../GraphQL/Client'
 
 class ProductDetails extends Component{
     constructor(props) {
@@ -22,10 +24,7 @@ class ProductDetails extends Component{
     }
 
     fetchProduct() {
-        const client = new ApolloClient({
-            uri:'http://localhost/index.php/graphql',
-            cache: new InMemoryCache(),
-        });
+
 
         const id = String(this.props.params.id);
 
@@ -140,7 +139,8 @@ class ProductDetails extends Component{
         return (
 
             <div className="ProductDetails">
-                <div className="ProductImages">
+                <div className="ProductImages"
+                     data-testid='product-gallery'>
                     <div className="Images">
                         {product.images.map((image, index) => (
                             <img
@@ -194,24 +194,10 @@ class ProductDetails extends Component{
                 <div className="ProductInfo">
                     <h1 className="ProductName">{product.product}</h1>
 
-                    {product.attributes && product.attributes.length > 0 ? (
-                        product.attributes
-                            .reduce((acc, attribute) => {
-                                const existingAttribute = acc.find(
-                                    (a) => a.attribute_name === attribute.attribute_name
-                                );
-                                if (existingAttribute) {
-                                    existingAttribute.values.push(attribute.product_value);
-                                } else {
-                                    acc.push({
-                                        attribute_name: attribute.attribute_name,
-                                        values: [attribute.product_value],
-                                    });
-                                }
-                                return acc;
-                            }, [])
-                            .map((groupedAttribute, index) => (
-                                <div key={index}>
+                    {attributes.length > 0 ? (
+                        attributes.map((groupedAttribute, index) => (
+                                <div key={index}
+                                     data-testid={`product-attribute-${kebabCase(groupedAttribute.attribute_name)}`}>
                                     <div className="Product-Attributes">
                                         <h3 className="ProductSize">{groupedAttribute.attribute_name}:</h3>
                                     </div>
@@ -262,11 +248,13 @@ class ProductDetails extends Component{
                     onClick={this.handleAddToCart}
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
+                    data-testid='add-to-cart'
                 >
                     ADD TO CART
                 </button>
 
-                <div className="ProductDescription">
+                <div className="ProductDescription"
+                     data-testid='product-description'>
                     {parse(product.product_description)}</div>
             </div>
     </div>

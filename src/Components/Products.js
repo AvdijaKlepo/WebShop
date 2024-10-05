@@ -1,12 +1,11 @@
-
 import {Component} from "react";
 import {ApolloClient, InMemoryCache} from "@apollo/client";
-
 import {withRouter} from "../withRouter";
 import {GET_CATEGORIES, GET_PRODUCTS} from "../GraphQL/Queries";
 import {Link} from "react-router-dom";
 import {withCart} from "../useCart";
-
+import {kebabCase} from "lodash";
+import {client} from '../GraphQL/Client'
 
 
 class Products extends Component {
@@ -66,10 +65,7 @@ class Products extends Component {
     }
 
     fetchProducts = () => {
-        const client = new ApolloClient({
-            uri: 'http://localhost/index.php/graphql',
-            cache: new InMemoryCache(),
-        });
+
 
 
         const categoryId = Number(this.props.params.category_id);
@@ -103,10 +99,7 @@ class Products extends Component {
             });
     };
     fetchCategories = ()=>{
-        const client = new ApolloClient({
-            uri: 'http://localhost/index.php/graphql',
-            cache: new InMemoryCache(),
-        });
+
         client.query({
             query: GET_CATEGORIES,
             fetchPolicy: 'network-only'
@@ -138,8 +131,6 @@ class Products extends Component {
                 }
             });
         }
-        console.log('Atributi izabrani quick shop:',JSON.stringify(finalSelectedAttributes));
-
         const uniqueId = `${product.id}-${JSON.stringify(finalSelectedAttributes)}`
 
 
@@ -148,7 +139,7 @@ class Products extends Component {
             ? product.attributes.reduce((acc, attribute) => {
                 const existing = acc.find(a => a.attribute_name === attribute.attribute_name);
                 if (existing) {
-                    existing.values.push(attribute.display_value);
+                    existing.values.push(attribute.product_value);
                 } else {
                     acc.push({
                         attribute_name: attribute.attribute_name,
@@ -169,7 +160,6 @@ class Products extends Component {
             attributes: simplifiedAttributes,
             attribute: finalSelectedAttributes,
         });
-        console.log('Id za quick shop:',uniqueId)
     };
 
     render() {
@@ -194,12 +184,11 @@ class Products extends Component {
                 <div className="row row-cols-3 row-cols-md-3 g-4">
                     {products.map((product, index) => (
                         <div className="col" key={index}>
-
                                 <div
                                     className="card"
                                     onMouseEnter={() => this.handelItemHover(product.product)}
                                     onMouseLeave={this.handleItemLeave}
-                                    data-testid={`product-${product.product}`}
+                                    data-testid={`product-${kebabCase(product.product)}`}
                                 >
                                     <div className="Product-Image">
                                         <Link to={`/productdetails/${product.id}`} style={{textDecoration:"none"}}>

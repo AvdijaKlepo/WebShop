@@ -11,7 +11,9 @@ body {
 .Shop-Logo{
     margin-right: 7rem;
 }
-
+.navbar{
+    background-color: #ffffff; /* sticky nav*/
+}
 /* Products */
 .inStockCheck{
     font-family: Raleway, sans-serif;
@@ -24,9 +26,7 @@ body {
     align-items: center;
 
 }
-.navbar{
-    background-color: #ffffff; /* sticky nav*/
-}
+
 
 .DisplayCategory{
     font-weight: 400;
@@ -236,28 +236,28 @@ body {
 .Cart {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Reduce gap between product items for smaller space */
+    gap: 15px;
 }
 
 .ProductItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0; /* Add padding between product items */
-    border-bottom: 1px solid #ddd; /* Optional: border between items */
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .ProductItems {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    flex: 1; /* Ensure this section takes up available space */
+    flex: 1;
 }
 
 .QuantityAndImage {
     display: flex;
     align-items: center;
-    gap: 10px; /* Reduce gap for better fit in modal */
+    gap: 10px;
 }
 
 .Quantity-Buttons {
@@ -268,7 +268,7 @@ body {
 }
 
 #Remove, #Add {
-    width: 25px; /* Reduce button size to fit modal */
+    width: 25px;
     height: 25px;
     border-radius: 0;
     text-align: center;
@@ -276,11 +276,11 @@ body {
 }
 
 .Quantity {
-    padding: 5px 0; /* Reduce padding for more compact layout */
+    padding: 5px 0;
 }
 
 .Cart-Image {
-    width: 70px; /* Smaller image for modal */
+    width: 70px;
     height: 70px;
     object-fit: cover;
 }

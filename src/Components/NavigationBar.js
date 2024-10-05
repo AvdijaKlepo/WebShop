@@ -22,7 +22,7 @@ class NavigationBar extends Component {
 
     componentDidMount() {
         const client = new ApolloClient({
-            uri: 'http://localhost/index.php/graphql',
+            uri: process.env.REACT_APP_GRAPHQL_URI,
             cache: new InMemoryCache(),
         });
         client
@@ -70,29 +70,20 @@ class NavigationBar extends Component {
                                             className={`nav-item ${isActive ? 'active' : ''}`}
                                             onClick={() => this.handleItemClick(category.category)}
                                             style={{borderBottom: isActive ? '3px solid lightgreen' : 'none'}}
-                                            data-testid='active-category-link'
                                         >
                                             <Link
-                                                data-testid='category-link'
-                                                to={{
-
-                                                    pathname: `/products/${category.id}`,
-                                                    state: {activeCategory: activeItem},
-
-                                                }}
-                                                key={category.id}
-
+                                                to={`/products/${category.id}`}
+                                                state={{activeCategory:activeItem}}
                                                 style={{
                                                     textDecoration: 'none',
                                                     color: isActive ? 'lightgreen' : 'inherit',
-
                                                 }}
+                                                className="nav-link active mb-4"
+                                                data-testid={isActive ? 'active-category-lind':'category-link'}
+                                            >
 
-                                                className="nav-link active mb-4">
                                                 {category.category.toUpperCase()}
-
                                             </Link>
-
                                         </li>
                                     );
                                 })}
@@ -100,7 +91,7 @@ class NavigationBar extends Component {
                         <div className="d-none d-lg-block text-center flex-grow-1">
                             <img className="Shop-Logo" src={logo} alt="webShopLogo"/>
                         </div>
-                            <button data-testId="cart-btn" style={{backgroundColor: "white", border: "none"}}>
+                            <button data-testid='cart-btn' style={{backgroundColor: "white", border: "none"}}>
                                 <i  id="modalCart" className="bi bi-cart me-5 pe-5 h3" data-bs-toggle="modal"
                                    data-bs-target="#exampleModal">
 

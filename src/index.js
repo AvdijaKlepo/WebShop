@@ -3,20 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client";
+import {ApolloProvider} from "@apollo/client";
 import {BrowserRouter} from "react-router-dom";
+import { client } from './GraphQL/Client';
 
-
-const client = new ApolloClient({
-  uri:'http://localhost/index.php/graphql',
-  cache: new InMemoryCache(),
-  connectToDevTools: true,
-  defaultOptions: {
-    query: {
-      fetchPolicy: 'no-cache',
-    },
-  },
-});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
