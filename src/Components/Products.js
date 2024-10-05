@@ -1,5 +1,4 @@
 import {Component} from "react";
-import {ApolloClient, InMemoryCache} from "@apollo/client";
 import {withRouter} from "../withRouter";
 import {GET_CATEGORIES, GET_PRODUCTS} from "../GraphQL/Queries";
 import {Link} from "react-router-dom";
@@ -56,11 +55,6 @@ class Products extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.params.category_id !== this.props.params.category_id) {
             this.fetchProducts();
-        }
-        if (this.props.location !== prevProps.location) {
-            const activeCategory = this.props.location.state
-                ? this.props.location.state.activeCategory
-                : null;
         }
     }
 
@@ -119,7 +113,7 @@ class Products extends Component {
     }
     handleAddToCart = (product) => {
         const { selectedAttributes } = this.state;
-        const { addItem,items,quantity } = this.props.cart;
+        const { addItem } = this.props.cart;
 
         let finalSelectedAttributes = { ...selectedAttributes };
 

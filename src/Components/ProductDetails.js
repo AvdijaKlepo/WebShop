@@ -1,6 +1,5 @@
 import {Component} from "react";
 import {withRouter} from "../withRouter";
-import {ApolloClient, InMemoryCache} from "@apollo/client";
 import { GET_PRODUCT_BY_ID} from "../GraphQL/Queries";
 import {withCart} from "../useCart";
 import parse from 'html-react-parser'
@@ -106,7 +105,7 @@ class ProductDetails extends Component{
     };
 
     render() {
-        const {product,loading,error,selectedAttribute}=this.state;
+        const {product,loading,error}=this.state;
         if(loading){
             return <p>Loading...</p>
         }

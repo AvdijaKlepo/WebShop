@@ -1,6 +1,5 @@
 import {Component} from "react";
 import { withCart } from "../useCart";
-import {ApolloClient, InMemoryCache, split} from "@apollo/client";
 import {ADD_CART_ITEM} from "../GraphQL/Mutations";
 import _ from "lodash";
 import {client} from '../GraphQL/Client'
@@ -22,7 +21,7 @@ class Cart extends Component {
             client.mutate({
                 mutation: ADD_CART_ITEM,
                 variables: {
-                    product_id: item.id.indexOf('-{') !==-1 ? item.id.slice(0,item.id.indexOf('-{')): item.id, //need a uniqueid to differentiate attributes, so slice if from details and leave alone from quick shop
+                    product_id: item.id.indexOf('-{') !==-1 ? item.id.slice(0,item.id.indexOf('-{')): item.id, //need  unique id to differentiate attributes, so slice if from details and leave alone from quick shop
                     product: item.name,
                     amount: item.price,
                     quantity: item.quantity,
@@ -31,7 +30,6 @@ class Cart extends Component {
 
             })
                 .then(response => {
-
                     if (response.data.addCartItem) {
                         alert("Items added to cart successfully!");
 
@@ -52,11 +50,8 @@ class Cart extends Component {
         const {
             items,
             totalItems,
-            totalUniqueItems,
             cartTotal,
             updateItemQuantity,
-            removeItem,
-            emptyCart,
         } = this.props.cart;
 
 
@@ -74,7 +69,7 @@ class Cart extends Component {
                             </div>
                             <div className="modal-body">
                                 <div className="Cart">
-                                    {items.map((item, index) => (
+                                    {items.map((item) => (
                                         <div className="ProductItem" key={item.id}>
                                             <div className="ProductItems">
                                                 <p>{item.name}</p>

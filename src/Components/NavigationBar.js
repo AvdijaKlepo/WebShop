@@ -50,9 +50,7 @@ class NavigationBar extends Component {
 
     render() {
         const { categories, loading, error, activeItem } = this.state;
-        const { items,
-            totalItems,
-            } = this.props.cart;
+        const {totalItems} = this.props.cart;
 
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error: {error}</p>;
