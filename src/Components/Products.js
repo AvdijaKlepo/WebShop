@@ -58,18 +58,15 @@ class Products extends Component {
         }
     }
 
+
+
     fetchProducts = () => {
 
-
-
         const categoryId = Number(this.props.params.category_id);
-
 
         if (isNaN(categoryId)) {
             return;
         }
-
-
         this.setState({ loading: true, error: null });
 
         client.query({
@@ -93,7 +90,6 @@ class Products extends Component {
             });
     };
     fetchCategories = ()=>{
-
         client.query({
             query: GET_CATEGORIES,
             fetchPolicy: 'network-only'

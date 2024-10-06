@@ -50,6 +50,17 @@ class ProductDetails extends Component{
         this.setState({activeIndex:index})
     }
 
+    handlePrev = () => {
+        this.setState(prevState => ({
+            activeIndex: prevState.activeIndex === 0 ? this.state.product.images.length - 1 : prevState.activeIndex - 1
+        }));
+    }
+
+    handleNext = () => {
+        this.setState(prevState => ({
+            activeIndex: prevState.activeIndex === this.state.product.images.length - 1 ? 0 : prevState.activeIndex + 1
+        }));
+    }
 
     handleAttributeSelected = (attributeName, value) => {
         this.setState((prevState) => ({
@@ -63,6 +74,7 @@ class ProductDetails extends Component{
 
 
     handleAddToCart = () => {
+
         const { product, selectedAttributes } = this.state;
         const { addItem } = this.props.cart;
 
@@ -82,6 +94,7 @@ class ProductDetails extends Component{
         }, []): [];
 
         if (selectedAttributes) {
+
             addItem({
                 id:uniqueId,
                 name:product.product,
@@ -148,6 +161,7 @@ class ProductDetails extends Component{
                                 src={image.image}
                                 alt={`Product Image ${index}`}
                                 onClick={() => this.handleImageClicked(index)}
+
                             />
                         ))}
                     </div>
@@ -157,6 +171,7 @@ class ProductDetails extends Component{
                                 <div
                                     key={index}
                                     className={`carousel-item ${index === this.state.activeIndex ? "active" : ""}`}>
+                                    {console.log('Active index',this.state.activeIndex)}
                                     <img
                                         src={images.image}
                                         className="Carousel-Image"
@@ -169,8 +184,7 @@ class ProductDetails extends Component{
                         <button
                             className="carousel-control-prev"
                             type="button"
-                            data-bs-target="#carouselExample"
-                            data-bs-slide="prev"
+                            onClick={this.handlePrev}
                             style={{display: `${product.images.length > 1 ? 'block' : 'none'}`}}
 
                         >
@@ -180,8 +194,7 @@ class ProductDetails extends Component{
                         <button
                             className="carousel-control-next"
                             type="button"
-                            data-bs-target="#carouselExample"
-                            data-bs-slide="next"
+                            onClick={this.handleNext}
                             style={{display: `${product.images.length > 1 ? 'block' : 'none'}`,}}
                         >
                             <span className="carousel-control-next-icon" aria-hidden="true"></span>
@@ -229,7 +242,7 @@ class ProductDetails extends Component{
                                 </div>
                             ))
                     ) : (
-                        <p>No attributes.</p>
+                        <p></p>
                     )}
 
 
@@ -240,6 +253,7 @@ class ProductDetails extends Component{
                 </div>
 
                 <button
+
                     id="AddToCartButton"
                     type="button"
                     className="btn btn-success"
