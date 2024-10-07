@@ -5,10 +5,6 @@ import _ from "lodash";
 import {client} from '../GraphQL/Client'
 
 class Cart extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleAddToCart = () => {
         const { items,emptyCart } = this.props.cart;
 

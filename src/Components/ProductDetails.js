@@ -159,7 +159,6 @@ class ProductDetails extends Component{
                                 key={index}
                                 className={`ImageVariant ${this.state.activeIndex === index ? 'active' : ''}`}
                                 src={image.image}
-                                alt={`Product Image ${index}`}
                                 onClick={() => this.handleImageClicked(index)}
 
                             />
