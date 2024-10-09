@@ -26,8 +26,6 @@ body {
     align-items: center;
 
 }
-
-
 .DisplayCategory{
     font-weight: 400;
     font-size: 40px;
@@ -41,7 +39,7 @@ body {
     width:386px;
     height: 444px;
     border-style: none;
-    margin-left:6rem;
+    margin-left:7rem;
     transition: all 0.3s ease-in-out;
 }
 .card:hover{
@@ -55,9 +53,6 @@ body {
     height: 330px;
     padding: 10px 5px 5px 10px;
 }
-.card-body{
-
-}
 #Hover-Icon{
     transform:translate(-10%);
     position: absolute;
@@ -70,6 +65,7 @@ body {
     height: 52px;
     padding-top: 7px;
 }
+
 .modal {
     margin-left: 80rem;
     margin-top: 4rem;

@@ -171,7 +171,7 @@ class Products extends Component {
                 {displayCategory ? (
                     <h1 className="DisplayCategory">{displayCategory.category.toUpperCase()}</h1>
                 ) : null}
-                <div className="row row-cols-3 row-cols-md-3 g-4">
+                <div className="row row-cols-3 row-cols-md-3 g-4 ">
                     {products.map((product, index) => (
                         <div className="col" key={index}>
                                 <div

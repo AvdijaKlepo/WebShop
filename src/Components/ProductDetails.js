@@ -14,7 +14,8 @@ class ProductDetails extends Component{
             loading:false,
             error:null,
             activeIndex:0,
-            selectedAttributes:{}
+            selectedAttributes:{},
+            attributeIndex:0
         }
     }
 
@@ -63,13 +64,16 @@ class ProductDetails extends Component{
     }
 
     handleAttributeSelected = (attributeName, value) => {
-        this.setState((prevState) => ({
-
-            selectedAttributes: {
-                ...prevState.selectedAttributes,
-                [attributeName]: value,
+        this.setState((prevState) => {
+            const selectedAttributes = { ...prevState.selectedAttributes };
+            if (selectedAttributes[attributeName] === value) {
+                delete selectedAttributes[attributeName];
+            } else {
+                selectedAttributes[attributeName] = value;
             }
-        }));
+
+            return { selectedAttributes };
+        });
     };
 
 
@@ -79,6 +83,7 @@ class ProductDetails extends Component{
         const { addItem } = this.props.cart;
 
         const uniqueId = `${product.id}-${JSON.stringify(selectedAttributes)}`
+
 
         const simplifiedAttributes = product.attributes ? product.attributes.reduce((acc, attribute) => {
             const existing = acc.find(a => a.attribute_name === attribute.attribute_name);
@@ -147,6 +152,8 @@ class ProductDetails extends Component{
 
         const uniqueAttributeNames = attributes.length;
 
+        const index = 0;
+
 
         return (
 
@@ -170,7 +177,7 @@ class ProductDetails extends Component{
                                 <div
                                     key={index}
                                     className={`carousel-item ${index === this.state.activeIndex ? "active" : ""}`}>
-                                    {console.log('Active index',this.state.activeIndex)}
+
                                     <img
                                         src={images.image}
                                         className="Carousel-Image"
@@ -226,8 +233,9 @@ class ProductDetails extends Component{
                                                     className={`btn ${
                                                         colorAttributeColor ? 
                                                             "btn-outline-success" : "btn-outline-dark"
-                                                    } ${selectedAttribute ? "selected" : ""}`}
+                                                    } ${selectedAttribute ? "active" : ""}`}
                                                     onClick={() => this.handleAttributeSelected(groupedAttribute.attribute_name, value)}
+
                                                     style={colorAttributeColor ? {backgroundColor:value}:{}}
                                                     data-bs-toggle="button"
                                                 >
