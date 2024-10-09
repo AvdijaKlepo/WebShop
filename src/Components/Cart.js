@@ -55,7 +55,7 @@ class Cart extends Component {
         return (
             <div className="Cart">
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog" style={{ position: "fixed", top: "50", right: "10px", transform: "translateX(-20px)", width: "500px" }}>
                         <div className="modal-content">
                             <div className="modal-header">
                                 <p>

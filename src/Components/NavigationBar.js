@@ -89,7 +89,7 @@ class NavigationBar extends Component {
                         <div className="d-none d-lg-block text-center flex-grow-1">
                             <img className="Shop-Logo" src={logo} alt="webShopLogo"/>
                         </div>
-                            <button data-testid='cart-btn' style={{backgroundColor: "white", border: "none"}}>
+                            <button data-testid='cart-btn' style={{backgroundColor: "white", border: "none",height:"50px"}}>
                                 <i  id="modalCart" className="bi bi-cart me-5 pe-5 h3" data-bs-toggle="modal"
                                    data-bs-target="#exampleModal">
 
