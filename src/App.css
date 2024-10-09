@@ -89,10 +89,16 @@ body {
     display: flex;
     flex-direction: row;
     padding-top: 200px;
+    flex-wrap: wrap;
+    overflow-x: hidden;
 }
 
 .ProductImages{
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+
 }
 .Images{
     display: flex;

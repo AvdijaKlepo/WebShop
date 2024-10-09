@@ -27,15 +27,16 @@ class Cart extends Component {
             })
                 .then(response => {
                     if (response.data.addCartItem) {
-                        alert("Items added to cart successfully!");
+
+                        alert("Order placed successfully!");
 
                     }
                     emptyCart();
 
                 })
                 .catch(err => {
-                    console.error("Error adding items to cart", err);
-                    alert("Failed to add items to cart: " + err.message);
+                    console.error("Error placing order", err);
+                    alert("Failed to place order: " + err.message);
                 });
 
         });
@@ -154,7 +155,7 @@ class Cart extends Component {
                                     onClick={this.handleAddToCart}
                                     disabled={totalItems === 0}
                                 >
-                                    ADD TO CART
+                                    PLACE ORDER
                                 </button>
                             </div>
                         </div>
