@@ -77,7 +77,7 @@ class NavigationBar extends Component {
                                                     color: isActive ? 'lightgreen' : 'inherit',
                                                 }}
                                                 className="nav-link active mb-4"
-                                                data-testid={isActive ? 'active-category-lind':'category-link'}
+                                                data-testid={isActive ? 'active-category-link':'category-link'}
                                             >
 
                                                 {category.category.toUpperCase()}
