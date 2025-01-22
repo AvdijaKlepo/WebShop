@@ -20,29 +20,29 @@ class NavigationBar extends Component {
 
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         const client = new ApolloClient({
             uri: process.env.REACT_APP_GRAPHQL_URI,
             cache: new InMemoryCache(),
         });
-        client
-            .query({
+        try {
+            const result = await client.query({
                 query: GET_CATEGORIES,
-            })
-            .then((result) => {
-                const categories = result.data.categories;
-                this.setState({ categories: result.data.categories, loading: false,
-                    activeItem:categories.length > 0 ? categories[0].category : null
-                });
-                if (categories.length>0){
-                    const firstCategoryId = categories[0].id;
-                    this.navigateToCategory(firstCategoryId);
-                }
-
-            })
-            .catch((error) => {
-                this.setState({ error: error.message, loading: false });
             });
+            const categories = result.data.categories;
+            this.setState({
+                categories: categories,
+                loading: false,
+                activeItem: categories.length > 0 ? categories[0].category : null
+            });
+            if (categories.length > 0) {
+                const firstCategoryId = categories[0].id;
+                this.navigateToCategory(firstCategoryId);
+            }
+        }
+         catch (error) {
+            this.setState({error: error.message, loading: false});
+         }
     }
     navigateToCategory = (categoryId) => {
         this.props.navigate(`/products/${categoryId}`);
